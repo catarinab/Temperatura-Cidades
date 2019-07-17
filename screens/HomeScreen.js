@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, FlatList, StatusBar, TouchableHighlight } from 'react-native';
+import { Text, StyleSheet, View, FlatList, StatusBar, TouchableHighlight, Button } from 'react-native';
 import { LinearGradient } from 'expo';
 
 export default class App extends React.Component{
@@ -144,6 +144,40 @@ export default class App extends React.Component{
     this.fetchTemps();
   }
 
+
+  getTranslation = (t) => {
+    if (t == 'Clouds'){
+      return 'Nuvens';
+    }
+    if(t == 'Clear'){
+      return 'Sol';
+    }
+    if(t == 'Haze'){
+      return 'Nevoeiro';
+    }
+    if(t == 'Thunderstorm'){
+      return 'Trovoada';
+    }
+    if(t =='Rain'){
+      return 'Chuva';
+    }
+    if(t =='Snow'){
+      return 'Neve';
+    }
+    if(t =='Mist'){
+      return 'Nublado';
+    }
+    if(t =='Smoke'){
+      return 'Esfumado';
+    }
+    else{
+      console.log(t);
+      return 't';
+    }
+  }
+
+
+
   FetchCityTemp = (city, country, newList) => {
     fetch('http://api.openweathermap.org/data/2.5/weather?q='+city+','+country+'&appid=5938d63b8017ba76aaa6ecd410e78042&units=metric')
     .then((response) => response.json())
@@ -155,10 +189,10 @@ export default class App extends React.Component{
         country: country, //País dado anteriormente
         temp: Math.ceil(r.temp), //Temperatura
         type: obj.weather[0].main, //Se está nublado etc etc
-        desc: 'Humidade: '+r.humidity+'%  -  '+obj.weather[0].main,
+        desc: 'Humidade: '+r.humidity+'%  -  '+this.getTranslation(obj.weather[0].main),
+        fav: 'false'
       };
       newList.push(City);//Pomos as cidades na lista
-      console.log(obj.weather[0].main);
       this.setState({
         list: newList,
         refresh: false
@@ -166,29 +200,6 @@ export default class App extends React.Component{
     })
   }
 
-getTranslation = (t) => {
-  if (t == 'Clouds'){
-    return 'Nuvens';
-  }
-  if(t == 'Clear'){
-    return 'Sol';
-  }
-  if(t == 'Haze'){
-    return 'Nevoeiro';
-  }
-  if(t == 'Thunderstorm'){
-    return 'Trovoada';
-  }
-  if(t =='Rain'){
-    return 'Chuva';
-  }
-  if(t =='Snow'){
-    return 'Neve';
-  }
-  if(t =='Mist'){
-    return 'Nublado';
-  }
-}
 
 getTempRange = (t) => {
   if (t<13){
@@ -229,7 +240,10 @@ getEmoji = (type) => {
     return '🌥️';
   }
   if(type =='Fog'){
-    return '⛅';
+    return '🌥️';
+  }
+  if (type == 'Smoke'){
+    return '🌥️';
   }
 }
 
