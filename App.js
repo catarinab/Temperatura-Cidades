@@ -3,14 +3,12 @@ import { Text, StyleSheet, View } from 'react-native';
 import {createAppContainer, createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import HomeScreen from './screens/HomeScreen.js'
 import SearchScreen from './screens/SearchScreen.js'
-import AddScreen from './screens/AddScreen.js'
 
 //ideias: noutro screen escolher quais cidades queremos que apareçam
 
 const MainStack = createBottomTabNavigator({
   Cidades: {screen: HomeScreen},
-  Procurar: {screen: SearchScreen},
-  Adicionar: {screen: AddScreen}
+  Procurar: {screen: SearchScreen}
 },
 {
   headerMode: 'none',
